@@ -1,11 +1,13 @@
 (function () {
   'use strict';
 
-  // Константы для исключаемых чатов
-  const EXCLUDED_CHATS = [
-    'Правила игры в тринку',
-    'Ответственность при повреждении машины',
-  ].map((chatTitle) => chatTitle.toLowerCase());
+  // Стандартные исключаемые чаты
+  const DEFAULT_EXCLUDED_CHATS = [];
+
+  // Текущий список исключаемых чатов (будет загружен из storage)
+  let currentExcludedChats = DEFAULT_EXCLUDED_CHATS.map((chat) =>
+    chat.toLowerCase()
+  );
 
   // Глобальные переменные
   let isUIAdded = false;
@@ -15,6 +17,32 @@
   function waitForTime(milliseconds) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
+
+  /** Загрузка исключенных чатов из chrome.storage */
+  async function loadExcludedChatsFromStorage() {
+    try {
+      const result = await chrome.storage.sync.get(['excludedChats']);
+      const excludedChats = result.excludedChats || DEFAULT_EXCLUDED_CHATS;
+      currentExcludedChats = excludedChats.map((chat) => chat.toLowerCase());
+      console.log('🔄 Загружены исключенные чаты:', currentExcludedChats);
+    } catch (error) {
+      console.error('❌ Ошибка загрузки исключенных чатов:', error);
+      currentExcludedChats = DEFAULT_EXCLUDED_CHATS.map((chat) =>
+        chat.toLowerCase()
+      );
+    }
+  }
+
+  /** Обработка сообщений от popup */
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === 'EXCLUDED_CHATS_UPDATED') {
+      currentExcludedChats = message.excludedChats.map((chat) =>
+        chat.toLowerCase()
+      );
+      console.log('🔄 Обновлены исключенные чаты:', currentExcludedChats);
+      sendResponse({ success: true });
+    }
+  });
 
   /** Создание или обновление индикатора статуса */
   function createOrUpdateStatusIndicator(statusText) {
@@ -99,7 +127,7 @@
         const titleElement = chatLink.querySelector('.truncate');
         const chatTitle = titleElement?.textContent.trim().toLowerCase() || '';
 
-        checkbox.checked = !EXCLUDED_CHATS.includes(chatTitle);
+        checkbox.checked = !currentExcludedChats.includes(chatTitle);
       });
     };
 
@@ -258,6 +286,10 @@
 
   // Инициализация расширения
   console.log('🚀 Chrome расширение ChatGPT Bulk Chat Remover запущено');
+
+  // Загружаем исключенные чаты из storage
+  loadExcludedChatsFromStorage();
+
   injectFetchInterceptor();
   waitForNavigationSidebar();
 })();
