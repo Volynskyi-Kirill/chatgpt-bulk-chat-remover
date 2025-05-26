@@ -11,6 +11,11 @@
 (function () {
   'use strict';
 
+  const EXCLUDED_CHATS = [
+    'Правила игры в тринку',
+    'Ответственность при повреждении машины',
+  ].map((s) => s.toLowerCase());
+
   // сюда запишем токен, когда он впервые встретится в headers
   window.__GPT_ACCESS_TOKEN = null;
 
@@ -93,9 +98,14 @@
     const selectBtn = document.createElement('button');
     selectBtn.textContent = '✅ Виділити всі';
     selectBtn.onclick = () => {
-      document
-        .querySelectorAll('.gpt-chat-checkbox')
-        .forEach((cb) => (cb.checked = true));
+      document.querySelectorAll('.gpt-chat-checkbox').forEach((cb) => {
+        const link = cb.closest('a[draggable="true"]');
+        // Находим текст заголовка внутри <a>
+        const titleEl = link.querySelector('.truncate');
+        const title = titleEl?.textContent.trim().toLowerCase() || '';
+
+        cb.checked = !EXCLUDED_CHATS.includes(title);
+      });
     };
 
     const deleteBtn = document.createElement('button');
@@ -167,28 +177,6 @@
 
       // вставляем перед ссылкой
       link.prepend(checkbox);
-    });
-  }
-
-  /** Ожидание кнопки Delete */
-  async function waitForDeleteButton(timeout = 4000) {
-    return new Promise((resolve, reject) => {
-      const interval = setInterval(() => {
-        const btn = Array.from(document.querySelectorAll('button')).find(
-          (b) =>
-            b.textContent.trim().toLowerCase() === 'delete' &&
-            !b.className.match(/bg-red/i) // не подтверждение
-        );
-        if (btn) {
-          clearInterval(interval);
-          resolve(btn);
-        }
-      }, 100);
-
-      setTimeout(() => {
-        clearInterval(interval);
-        reject(new Error('Кнопка Delete не появилась'));
-      }, timeout);
     });
   }
 
