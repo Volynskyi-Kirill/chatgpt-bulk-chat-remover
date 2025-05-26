@@ -102,6 +102,49 @@
     }, 1000);
   }
 
+  /** Применение стилей к кнопке */
+  function applyButtonStyles(
+    button,
+    backgroundColor = '#4CAF50',
+    hoverColor = '#45a049'
+  ) {
+    button.style.padding = '8px 12px';
+    button.style.border = 'none';
+    button.style.borderRadius = '4px';
+    button.style.backgroundColor = backgroundColor;
+    button.style.color = 'white';
+    button.style.fontSize = '12px';
+    button.style.fontWeight = '500';
+    button.style.cursor = 'pointer';
+    button.style.transition = 'all 0.3s ease';
+    button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+    button.style.userSelect = 'none';
+
+    // Hover эффекты
+    button.addEventListener('mouseenter', () => {
+      button.style.backgroundColor = hoverColor;
+      button.style.transform = 'translateY(-1px)';
+      button.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+    });
+
+    button.addEventListener('mouseleave', () => {
+      button.style.backgroundColor = backgroundColor;
+      button.style.transform = 'translateY(0)';
+      button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+    });
+
+    // Эффект нажатия
+    button.addEventListener('mousedown', () => {
+      button.style.transform = 'translateY(1px)';
+      button.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)';
+    });
+
+    button.addEventListener('mouseup', () => {
+      button.style.transform = 'translateY(-1px)';
+      button.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+    });
+  }
+
   /** Добавление пользовательского интерфейса */
   function addUserInterface(containerElement) {
     const wrapperElement = document.createElement('div');
@@ -113,10 +156,12 @@
     wrapperElement.style.fontSize = '14px';
     wrapperElement.style.display = 'flex';
     wrapperElement.style.gap = '6px';
+    wrapperElement.style.flexWrap = 'wrap';
 
     const scrollButton = document.createElement('button');
     scrollButton.textContent = '📜 Прокрутити всі чати';
     scrollButton.onclick = scrollToBottomAndLoadChats;
+    applyButtonStyles(scrollButton, '#2196F3', '#1976D2'); // Синий
 
     const selectButton = document.createElement('button');
     selectButton.textContent = '✅ Виділити всі';
@@ -130,13 +175,25 @@
         checkbox.checked = !currentExcludedChats.includes(chatTitle);
       });
     };
+    applyButtonStyles(selectButton, '#4CAF50', '#45a049'); // Зеленый
+
+    const unselectButton = document.createElement('button');
+    unselectButton.textContent = '❌ Зняти виділення';
+    unselectButton.onclick = () => {
+      document.querySelectorAll('.gpt-chat-checkbox').forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+    };
+    applyButtonStyles(unselectButton, '#FF9800', '#F57C00'); // Оранжевый
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '🗑 Видалити обрані';
     deleteButton.onclick = deleteSelectedChats;
+    applyButtonStyles(deleteButton, '#f44336', '#d32f2f'); // Красный
 
     wrapperElement.appendChild(scrollButton);
     wrapperElement.appendChild(selectButton);
+    wrapperElement.appendChild(unselectButton);
     wrapperElement.appendChild(deleteButton);
 
     containerElement.prepend(wrapperElement);
