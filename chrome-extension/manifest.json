@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ChatGPT Bulk Chat Remover",
   "version": "2.0",
-  "description": "Массовое удаление чатов ChatGPT с автопрокруткой, выбором и удалением через API",
+  "description": "Bulk delete ChatGPT chats with auto-scroll, selection and API-based deletion",
   "permissions": ["activeTab", "storage"],
   "host_permissions": ["https://chatgpt.com/*", "https://chat.openai.com/*"],
   "content_scripts": [

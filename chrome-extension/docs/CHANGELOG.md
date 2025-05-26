@@ -1,56 +1,83 @@
-# 📝 Changelog - Перенос из Tampermonkey в Chrome Extension
+# 📝 Changelog
 
-## Версия 2.0 - Chrome Extension
+All notable changes to the ChatGPT Bulk Chat Remover extension will be documented in this file.
 
-### ✅ Что было перенесено:
+## [2.0.0] - 2024-12-19
 
-1. **Полный функционал** оригинального Tampermonkey скрипта
-2. **Автопрокрутка** для загрузки всех чатов
-3. **Массовый выбор** чатов с исключениями
-4. **Перехват токена** авторизации
-5. **Удаление через API** с индикатором прогресса
-6. **Защита важных чатов** из списка исключений
+### 🌟 Major Updates
 
-### 🔄 Изменения архитектуры:
+- **Complete English Translation**: All interface elements, documentation, and code comments now in English
+- **Modern Button Design**: Beautiful, colorful buttons with hover effects and animations
+- **Enhanced User Experience**: Improved visual feedback and intuitive controls
 
-- **Manifest V3** - современный стандарт Chrome Extensions
-- **Content Script** - основная логика в `content.js`
-- **Injected Script** - перехват fetch в `injected.js`
-- **Popup Interface** - информационный интерфейс
-- **Proper Icons** - PNG иконки для всех размеров
+### ✨ New Features
 
-### 📁 Структура файлов:
+- **Unselect All Button**: Quick way to deselect all chats with one click
+- **Advanced Button Styling**: Color-coded buttons with smooth animations
+  - 🔵 Load Chats (Blue)
+  - 🟢 Select All (Green)
+  - 🟠 Unselect All (Orange)
+  - 🔴 Delete Selected (Red)
+- **Improved Error Handling**: Better error messages and user feedback
+- **Enhanced Documentation**: Comprehensive guides and installation instructions
 
-```
-chrome-extension/
-├── manifest.json       # Конфигурация расширения
-├── content.js          # Основная логика (адаптированная из Tampermonkey)
-├── injected.js         # Перехват fetch запросов
-├── popup.html          # Popup интерфейс
-├── icons/              # PNG иконки (16, 48, 128px)
-├── README.md           # Подробная документация
-├── INSTALL.md          # Быстрая инструкция по установке
-└── CHANGELOG.md        # Этот файл
-```
+### 🔧 Technical Improvements
 
-### 🛠️ Технические улучшения:
+- **Code Refactoring**: Cleaner, more maintainable codebase
+- **Better Comments**: All code comments translated to English
+- **Improved Function Names**: More descriptive and consistent naming
+- **Enhanced Security**: Better token handling and validation
 
-- **Лучшие имена переменных** - следование best practices
-- **Модульная архитектура** - разделение на файлы
-- **Безопасность** - ограниченные permissions
-- **Совместимость** - работа с современными браузерами
+### 🎨 UI/UX Enhancements
 
-### 🔒 Безопасность:
+- **Hover Effects**: Smooth button animations on mouse hover
+- **Click Feedback**: Visual feedback when buttons are pressed
+- **Responsive Design**: Better layout adaptation
+- **Modern Color Scheme**: Intuitive color coding for different actions
 
-- Доступ только к chatgpt.com и chat.openai.com
-- Токен не передается третьим лицам
-- Минимальные разрешения (только activeTab)
+### 📚 Documentation
 
-### 📋 Готово к использованию:
+- **Updated README**: Comprehensive English documentation
+- **Installation Guide**: Step-by-step setup instructions
+- **Feature Documentation**: Detailed usage guides
+- **Troubleshooting**: Common issues and solutions
 
-Расширение полностью готово к установке и использованию. Все функции оригинального скрипта сохранены и адаптированы для Chrome Extension API.
+## [1.0.0] - 2024-12-18
+
+### 🎉 Initial Release
+
+- **Core Functionality**: Bulk deletion of ChatGPT conversations
+- **Auto-scroll**: Automatic loading of all chat conversations
+- **Token Interception**: Seamless authentication token capture
+- **Saved Chats Management**: Protect important conversations from deletion
+- **Chrome Extension Architecture**: Manifest V3 compliance
+- **Popup Interface**: User-friendly management interface
+- **Persistent Storage**: Chrome storage sync for saved chats
+- **API Integration**: Direct integration with ChatGPT's backend API
+
+### 🛡️ Security Features
+
+- **Local Storage**: All data stored locally in browser
+- **No External Servers**: No data transmission to external services
+- **Secure Token Handling**: Safe authentication token management
+
+### 🔧 Technical Features
+
+- **Content Script**: Main functionality injection
+- **Injected Script**: Token interception mechanism
+- **Message Passing**: Communication between components
+- **Error Handling**: Robust error management
+- **Progress Indicators**: Real-time operation status
 
 ---
 
-**Дата**: 2025  
-**Автор**: Адаптация Tampermonkey скрипта в Chrome Extension
+## Legend
+
+- 🌟 Major Updates
+- ✨ New Features
+- 🔧 Technical Improvements
+- 🎨 UI/UX Enhancements
+- 📚 Documentation
+- 🛡️ Security Features
+- 🐛 Bug Fixes
+- ⚠️ Breaking Changes

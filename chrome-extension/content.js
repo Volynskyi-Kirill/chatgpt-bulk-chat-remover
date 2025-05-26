@@ -1,50 +1,50 @@
 (function () {
   'use strict';
 
-  // Стандартные исключаемые чаты
+  // Default excluded chats
   const DEFAULT_EXCLUDED_CHATS = [];
 
-  // Текущий список исключаемых чатов (будет загружен из storage)
+  // Current list of excluded chats (will be loaded from storage)
   let currentExcludedChats = DEFAULT_EXCLUDED_CHATS.map((chat) =>
     chat.toLowerCase()
   );
 
-  // Глобальные переменные
+  // Global variables
   let isUIAdded = false;
   let capturedAccessToken = null;
 
-  /** Утилитная функция для ожидания */
+  /** Utility function for waiting */
   function waitForTime(milliseconds) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
 
-  /** Загрузка исключенных чатов из chrome.storage */
+  /** Load excluded chats from chrome.storage */
   async function loadExcludedChatsFromStorage() {
     try {
       const result = await chrome.storage.sync.get(['excludedChats']);
       const excludedChats = result.excludedChats || DEFAULT_EXCLUDED_CHATS;
       currentExcludedChats = excludedChats.map((chat) => chat.toLowerCase());
-      console.log('🔄 Загружены исключенные чаты:', currentExcludedChats);
+      console.log('🔄 Loaded excluded chats:', currentExcludedChats);
     } catch (error) {
-      console.error('❌ Ошибка загрузки исключенных чатов:', error);
+      console.error('❌ Error loading excluded chats:', error);
       currentExcludedChats = DEFAULT_EXCLUDED_CHATS.map((chat) =>
         chat.toLowerCase()
       );
     }
   }
 
-  /** Обработка сообщений от popup */
+  /** Handle messages from popup */
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'EXCLUDED_CHATS_UPDATED') {
       currentExcludedChats = message.excludedChats.map((chat) =>
         chat.toLowerCase()
       );
-      console.log('🔄 Обновлены исключенные чаты:', currentExcludedChats);
+      console.log('🔄 Updated excluded chats:', currentExcludedChats);
       sendResponse({ success: true });
     }
   });
 
-  /** Создание или обновление индикатора статуса */
+  /** Create or update status indicator */
   function createOrUpdateStatusIndicator(statusText) {
     let statusElement = document.querySelector('#gpt-bulk-status-indicator');
     if (!statusElement) {
@@ -60,7 +60,7 @@
     return statusElement;
   }
 
-  /** Инъекция скрипта для перехвата fetch */
+  /** Inject script for fetch interception */
   function injectFetchInterceptor() {
     const scriptElement = document.createElement('script');
     scriptElement.src = chrome.runtime.getURL('injected.js');
@@ -69,29 +69,29 @@
     };
     (document.head || document.documentElement).appendChild(scriptElement);
 
-    // Слушаем сообщения от инъектированного скрипта
+    // Listen for messages from injected script
     window.addEventListener('message', function (event) {
       if (event.source !== window) return;
 
       if (event.data.type && event.data.type === 'GPT_TOKEN_CAPTURED') {
         capturedAccessToken = event.data.token;
-        console.log('🗝️ Токен успешно перехвачен:', capturedAccessToken);
+        console.log('🗝️ Token successfully captured:', capturedAccessToken);
       }
     });
   }
 
-  /** Ожидание появления боковой панели навигации */
+  /** Wait for navigation sidebar to appear */
   function waitForNavigationSidebar() {
     const checkInterval = setInterval(() => {
-      console.log('🔍 Поиск навигационной панели...');
+      console.log('🔍 Looking for navigation panel...');
       const navigationBlock = document.querySelector(
         'nav.group\\/scrollport, nav.group\\/scrollport.relative'
       );
 
       if (navigationBlock) {
-        console.log('✅ Навигационная панель найдена:', navigationBlock);
+        console.log('✅ Navigation panel found:', navigationBlock);
       } else {
-        console.warn('❌ Навигационная панель не найдена');
+        console.warn('❌ Navigation panel not found');
       }
 
       if (navigationBlock && !isUIAdded) {
@@ -102,7 +102,7 @@
     }, 1000);
   }
 
-  /** Применение стилей к кнопке */
+  /** Apply styles to button */
   function applyButtonStyles(
     button,
     backgroundColor = '#4CAF50',
@@ -120,7 +120,7 @@
     button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
     button.style.userSelect = 'none';
 
-    // Hover эффекты
+    // Hover effects
     button.addEventListener('mouseenter', () => {
       button.style.backgroundColor = hoverColor;
       button.style.transform = 'translateY(-1px)';
@@ -133,7 +133,7 @@
       button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
     });
 
-    // Эффект нажатия
+    // Click effect
     button.addEventListener('mousedown', () => {
       button.style.transform = 'translateY(1px)';
       button.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)';
@@ -145,7 +145,7 @@
     });
   }
 
-  /** Добавление пользовательского интерфейса */
+  /** Add user interface */
   function addUserInterface(containerElement) {
     const wrapperElement = document.createElement('div');
     wrapperElement.style.padding = '10px';
@@ -159,37 +159,37 @@
     wrapperElement.style.flexWrap = 'wrap';
 
     const scrollButton = document.createElement('button');
-    scrollButton.textContent = '📜 Прокрутити всі чати';
+    scrollButton.textContent = '📜 Load All Chats';
     scrollButton.onclick = scrollToBottomAndLoadChats;
-    applyButtonStyles(scrollButton, '#2196F3', '#1976D2'); // Синий
+    applyButtonStyles(scrollButton, '#2196F3', '#1976D2'); // Blue
 
     const selectButton = document.createElement('button');
-    selectButton.textContent = '✅ Виділити всі';
+    selectButton.textContent = '✅ Select All';
     selectButton.onclick = () => {
       document.querySelectorAll('.gpt-chat-checkbox').forEach((checkbox) => {
         const chatLink = checkbox.closest('a[draggable="true"]');
-        // Находим элемент с заголовком чата
+        // Find element with chat title
         const titleElement = chatLink.querySelector('.truncate');
         const chatTitle = titleElement?.textContent.trim().toLowerCase() || '';
 
         checkbox.checked = !currentExcludedChats.includes(chatTitle);
       });
     };
-    applyButtonStyles(selectButton, '#4CAF50', '#45a049'); // Зеленый
+    applyButtonStyles(selectButton, '#4CAF50', '#45a049'); // Green
 
     const unselectButton = document.createElement('button');
-    unselectButton.textContent = '❌ Зняти виділення';
+    unselectButton.textContent = '❌ Unselect All';
     unselectButton.onclick = () => {
       document.querySelectorAll('.gpt-chat-checkbox').forEach((checkbox) => {
         checkbox.checked = false;
       });
     };
-    applyButtonStyles(unselectButton, '#FF9800', '#F57C00'); // Оранжевый
+    applyButtonStyles(unselectButton, '#FF9800', '#F57C00'); // Orange
 
     const deleteButton = document.createElement('button');
-    deleteButton.textContent = '🗑 Видалити обрані';
+    deleteButton.textContent = '🗑 Delete Selected';
     deleteButton.onclick = deleteSelectedChats;
-    applyButtonStyles(deleteButton, '#f44336', '#d32f2f'); // Красный
+    applyButtonStyles(deleteButton, '#f44336', '#d32f2f'); // Red
 
     wrapperElement.appendChild(scrollButton);
     wrapperElement.appendChild(selectButton);
@@ -198,7 +198,7 @@
 
     containerElement.prepend(wrapperElement);
 
-    // Добавляем элемент статуса под меню
+    // Add status element below menu
     const statusElement = document.createElement('div');
     statusElement.id = 'gpt-bulk-status-indicator';
     statusElement.style.marginTop = '6px';
@@ -208,14 +208,14 @@
     containerElement.prepend(statusElement);
   }
 
-  /** Прокрутка до конца списка чатов для загрузки всех */
+  /** Scroll to bottom of chat list to load all chats */
   async function scrollToBottomAndLoadChats() {
     const scrollableElement = document.querySelector(
       'nav.group\\/scrollport, nav.group\\/scrollport.relative'
     );
     if (!scrollableElement) return;
 
-    const statusElement = createOrUpdateStatusIndicator('⏳ Завантаження...');
+    const statusElement = createOrUpdateStatusIndicator('⏳ Loading...');
     let previousHeight = 0;
     let unchangedHeightCount = 0;
 
@@ -241,79 +241,79 @@
     }
 
     addCheckboxesToChats();
-    statusElement.textContent = '✅ Усі чати завантажено!';
+    statusElement.textContent = '✅ All chats loaded!';
   }
 
-  /** Добавление чекбоксов к чатам */
+  /** Add checkboxes to chats */
   function addCheckboxesToChats() {
     const chatLinkElements = document.querySelectorAll(
       'aside[aria-labelledby] a[draggable="true"]'
     );
 
     chatLinkElements.forEach((chatLink) => {
-      // Пропускаем, если чекбокс уже добавлен
+      // Skip if checkbox already added
       if (chatLink.querySelector('.gpt-chat-checkbox')) return;
 
-      // Создаём чекбокс
+      // Create checkbox
       const checkboxElement = document.createElement('input');
       checkboxElement.type = 'checkbox';
       checkboxElement.className = 'gpt-chat-checkbox';
       checkboxElement.style.marginRight = '5px';
 
-      // Останавливаем всплытие событий, чтобы клик по чекбоксу не активировал ссылку
+      // Stop event bubbling so checkbox click doesn't activate link
       checkboxElement.addEventListener('click', (event) => {
         event.stopPropagation();
       });
 
-      // Вставляем чекбокс перед содержимым ссылки
+      // Insert checkbox before link content
       chatLink.prepend(checkboxElement);
     });
   }
 
-  /** Удаление выбранных чатов */
+  /** Delete selected chats */
   async function deleteSelectedChats() {
     const selectedCheckboxes = document.querySelectorAll(
       '.gpt-chat-checkbox:checked'
     );
     if (!selectedCheckboxes.length) {
-      return alert('❗ Оберіть чати для видалення');
+      return alert('❗ Please select chats to delete');
     }
 
-    if (!confirm(`Видалити ${selectedCheckboxes.length} чат(и)?`)) {
+    if (!confirm(`Delete ${selectedCheckboxes.length} chat(s)?`)) {
       return;
     }
 
-    createOrUpdateStatusIndicator('⏳ Видалення...');
+    createOrUpdateStatusIndicator('⏳ Deleting...');
     let deletedCount = 0;
 
     for (const checkbox of selectedCheckboxes) {
-      // Находим ссылку и извлекаем ID чата
+      // Find link and extract chat ID
       const chatLink = checkbox.closest('a[draggable="true"]');
       if (!chatLink) {
-        console.warn('❌ Не найдена ссылка для чекбокса', checkbox);
+        console.warn('❌ Link not found for checkbox', checkbox);
         continue;
       }
 
       const hrefAttribute = chatLink.getAttribute('href') || '';
       const idMatch = hrefAttribute.match(/\/c\/([a-f0-9\-]+)/);
       if (!idMatch) {
-        console.warn('❌ Не удалось извлечь ID из', hrefAttribute);
+        console.warn('❌ Failed to extract ID from', hrefAttribute);
         continue;
       }
 
       const chatId = idMatch[1];
 
-      // Используем захваченный токен
+      // Use captured token
       const accessToken = capturedAccessToken;
       if (!accessToken) {
-        console.error('❌ Токен ещё не перехвачен');
+        console.error('❌ Token not captured yet');
         alert(
-          'Токен ещё не получен. Сначала откройте любое меню удаления вручную, чтобы расширение успело перехватить токен.'
+          'Token not received yet. Please manually open any delete menu first so the extension can capture the token.'
         );
         return;
       }
 
-      console.log('🗑 Удаляем чат (PATCH):', chatId);
+      console.log('🗑 Deleting chat (PATCH):', chatId);
 
       try {
         const response = await fetch(`/backend-api/conversation/${chatId}`, {
@@ -327,24 +327,24 @@
         });
 
         if (response.ok) {
-          console.log(`✅ Чат удалён: ${chatId}`);
+          console.log(`✅ Chat deleted: ${chatId}`);
           deletedCount++;
         } else {
-          console.warn(`⚠️ Ошибка ${response.status}`, await response.text());
+          console.warn(`⚠️ Error ${response.status}`, await response.text());
         }
       } catch (error) {
-        console.error('❌ Ошибка запроса для', chatId, error);
+        console.error('❌ Request error for', chatId, error);
       }
     }
 
-    createOrUpdateStatusIndicator(`✅ Видалено ${deletedCount} чат(и)!`);
-    alert('✅ Видалення завершено!');
+    createOrUpdateStatusIndicator(`✅ Deleted ${deletedCount} chat(s)!`);
+    alert('✅ Deletion completed!');
   }
 
-  // Инициализация расширения
-  console.log('🚀 Chrome расширение ChatGPT Bulk Chat Remover запущено');
+  // Extension initialization
+  console.log('🚀 ChatGPT Bulk Chat Remover Chrome extension started');
 
-  // Загружаем исключенные чаты из storage
+  // Load excluded chats from storage
   loadExcludedChatsFromStorage();
 
   injectFetchInterceptor();

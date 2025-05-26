@@ -1,29 +1,50 @@
-# 🚀 Быстрая установка Chrome расширения
+# 🚀 Installation Guide
 
-## Шаги установки:
+## Quick Start
 
-1. **Откройте Chrome** и перейдите в `chrome://extensions/`
+### 1. Download
 
-2. **Включите режим разработчика** (Developer mode) в правом верхнем углу
+- Download this repository as ZIP or clone it
+- Extract the files to a folder on your computer
 
-3. **Нажмите "Загрузить распакованное расширение"** (Load unpacked)
+### 2. Enable Developer Mode
 
-4. **Выберите папку `chrome-extension`** из этого проекта
+1. Open Chrome browser
+2. Go to `chrome://extensions/`
+3. Toggle **"Developer mode"** in the top right corner
 
-5. **Готово!** Расширение установлено и готово к работе
+### 3. Install Extension
 
-## Как использовать:
+1. Click **"Load unpacked"** button
+2. Select the `chrome-extension` folder
+3. The extension icon will appear in your toolbar
 
-1. Перейдите на **chatgpt.com**
-2. Интерфейс расширения появится автоматически в боковой панели
-3. Используйте кнопки для прокрутки, выбора и удаления чатов
+### 4. Start Using
 
-## Если что-то не работает:
+1. Go to [chatgpt.com](https://chatgpt.com)
+2. The interface will appear automatically in the sidebar
+3. Click the extension icon to manage saved chats
 
-- Перезагрузите страницу ChatGPT
-- Проверьте консоль браузера (F12) на ошибки
-- Убедитесь, что вы авторизованы на ChatGPT
+## Troubleshooting
 
----
+**Extension not working?**
 
-**Версия**: 2.0 | **Совместимость**: Chrome 88+
+- Make sure you're on chatgpt.com or chat.openai.com
+- Refresh the page after installing
+- Check that Developer mode is enabled
+
+**Can't see the interface?**
+
+- Look for the control panel in the left sidebar
+- Try scrolling up in the chat list
+- Refresh the page if needed
+
+**Token not captured?**
+
+- Open any chat menu manually first
+- This allows the extension to capture the authentication token
+- Then try bulk operations
+
+## Need Help?
+
+Check the [main documentation](../README.md) for detailed usage instructions.

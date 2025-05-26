@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -82,240 +82,246 @@
         color: #155724;
       }
 
-              .version {
-            text-align: center;
-            color: #888;
-            font-size: 11px;
-            margin-top: 10px;
-        }
+      .version {
+        text-align: center;
+        color: #888;
+        font-size: 11px;
+        margin-top: 10px;
+      }
 
-        /* Табы */
-        .tabs {
-            display: flex;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
+      /* Табы */
+      .tabs {
+        display: flex;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
 
-        .tab-button {
-            flex: 1;
-            padding: 8px 12px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 12px;
-            color: #666;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
+      .tab-button {
+        flex: 1;
+        padding: 8px 12px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 12px;
+        color: #666;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s;
+      }
 
-        .tab-button.active {
-            color: #333;
-            border-bottom-color: #007bff;
-            font-weight: 600;
-        }
+      .tab-button.active {
+        color: #333;
+        border-bottom-color: #007bff;
+        font-weight: 600;
+      }
 
-        .tab-button:hover {
-            background: #f8f9fa;
-        }
+      .tab-button:hover {
+        background: #f8f9fa;
+      }
 
-        .tab-content {
-            display: none;
-        }
+      .tab-content {
+        display: none;
+      }
 
-        .tab-content.active {
-            display: block;
-        }
+      .tab-content.active {
+        display: block;
+      }
 
-        /* Управление исключенными чатами */
-        .excluded-header h3 {
-            margin: 0 0 5px 0;
-            font-size: 14px;
-            color: #333;
-        }
+      /* Управление исключенными чатами */
+      .excluded-header h3 {
+        margin: 0 0 5px 0;
+        font-size: 14px;
+        color: #333;
+      }
 
-        .excluded-header p {
-            margin: 0 0 15px 0;
-            font-size: 11px;
-            color: #666;
-            line-height: 1.3;
-        }
+      .excluded-header p {
+        margin: 0 0 15px 0;
+        font-size: 11px;
+        color: #666;
+        line-height: 1.3;
+      }
 
-        .add-chat-form {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
+      .add-chat-form {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 15px;
+      }
 
-        .add-chat-form input {
-            flex: 1;
-            padding: 6px 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 12px;
-        }
+      .add-chat-form input {
+        flex: 1;
+        padding: 6px 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 12px;
+      }
 
-        .add-chat-form button {
-            padding: 6px 10px;
-            border: none;
-            background: #28a745;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            white-space: nowrap;
-        }
+      .add-chat-form button {
+        padding: 6px 10px;
+        border: none;
+        background: #28a745;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+        white-space: nowrap;
+      }
 
-        .add-chat-form button:hover {
-            background: #218838;
-        }
+      .add-chat-form button:hover {
+        background: #218838;
+      }
 
-        .excluded-list {
-            max-height: 150px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-        }
+      .excluded-list {
+        max-height: 150px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+      }
 
-        .excluded-item {
-            display: flex;
-            align-items: center;
-            padding: 6px 8px;
-            margin-bottom: 4px;
-            background: #f8f9fa;
-            border-radius: 4px;
-            font-size: 12px;
-        }
+      .excluded-item {
+        display: flex;
+        align-items: center;
+        padding: 6px 8px;
+        margin-bottom: 4px;
+        background: #f8f9fa;
+        border-radius: 4px;
+        font-size: 12px;
+      }
 
-        .excluded-item-text {
-            flex: 1;
-            margin-right: 8px;
-            word-break: break-word;
-        }
+      .excluded-item-text {
+        flex: 1;
+        margin-right: 8px;
+        word-break: break-word;
+      }
 
-        .excluded-item-actions {
-            display: flex;
-            gap: 4px;
-        }
+      .excluded-item-actions {
+        display: flex;
+        gap: 4px;
+      }
 
-        .excluded-item button {
-            padding: 2px 6px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 10px;
-        }
+      .excluded-item button {
+        padding: 2px 6px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 10px;
+      }
 
-        .edit-btn {
-            background: #ffc107;
-            color: #212529;
-        }
+      .edit-btn {
+        background: #ffc107;
+        color: #212529;
+      }
 
-        .edit-btn:hover {
-            background: #e0a800;
-        }
+      .edit-btn:hover {
+        background: #e0a800;
+      }
 
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-        }
+      .delete-btn {
+        background: #dc3545;
+        color: white;
+      }
 
-        .delete-btn:hover {
-            background: #c82333;
-        }
+      .delete-btn:hover {
+        background: #c82333;
+      }
 
-        .excluded-actions {
-            text-align: center;
-        }
+      .excluded-actions {
+        text-align: center;
+      }
 
-        .danger-btn {
-            padding: 6px 12px;
-            border: none;
-            background: #dc3545;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-        }
+      .danger-btn {
+        padding: 6px 12px;
+        border: none;
+        background: #dc3545;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+      }
 
-        .danger-btn:hover {
-            background: #c82333;
-        }
+      .danger-btn:hover {
+        background: #c82333;
+      }
 
-        .empty-state {
-            text-align: center;
-            color: #666;
-            font-size: 11px;
-            padding: 20px;
-            font-style: italic;
-        }
+      .empty-state {
+        text-align: center;
+        color: #666;
+        font-size: 11px;
+        padding: 20px;
+        font-style: italic;
+      }
     </style>
   </head>
   <body>
     <div class="header">
       <h1>🗑️ ChatGPT Bulk Chat Remover</h1>
-      <p>Масове видалення чатів ChatGPT</p>
+      <p>Bulk delete ChatGPT chats</p>
     </div>
 
-        <div class="content">
-        <div class="tabs">
-            <button class="tab-button active" data-tab="main">Головна</button>
-            <button class="tab-button" data-tab="excluded">Збережені чати</button>
+    <div class="content">
+      <div class="tabs">
+        <button class="tab-button active" data-tab="main">Main</button>
+        <button class="tab-button" data-tab="excluded">Saved Chats</button>
+      </div>
+
+      <div id="main-tab" class="tab-content active">
+        <div class="instruction">
+          📋 <strong>Instructions:</strong><br />
+          Go to chatgpt.com - the interface will appear automatically in the
+          sidebar.
         </div>
 
-        <div id="main-tab" class="tab-content active">
-            <div class="instruction">
-                📋 <strong>Інструкція:</strong><br />
-                Перейдіть на chatgpt.com - інтерфейс з'явиться автоматично в боковій
-                панелі.
-            </div>
+        <ul class="feature-list">
+          <li>
+            <span class="feature-icon">📜</span>
+            Auto-scroll all chats
+          </li>
+          <li>
+            <span class="feature-icon">✅</span>
+            Select all chats (except saved)
+          </li>
+          <li>
+            <span class="feature-icon">🔒</span>
+            Automatic token capture
+          </li>
+          <li>
+            <span class="feature-icon">🗑️</span>
+            Bulk deletion via API
+          </li>
+          <li>
+            <span class="feature-icon">📊</span>
+            Progress indicator
+          </li>
+        </ul>
 
-            <ul class="feature-list">
-                <li>
-                    <span class="feature-icon">📜</span>
-                    Автопрокрутка всіх чатів
-                </li>
-                <li>
-                    <span class="feature-icon">✅</span>
-                    Виділення всіх чатів (крім збережених)
-                </li>
-                <li>
-                    <span class="feature-icon">🔒</span>
-                    Автоматичний перехоплення токену
-                </li>
-                <li>
-                    <span class="feature-icon">🗑️</span>
-                    Масове видалення через API
-                </li>
-                <li>
-                    <span class="feature-icon">📊</span>
-                    Індикатор прогресу
-                </li>
-            </ul>
+        <div class="status">✅ Extension is active and ready to work</div>
+        <div class="version">Version 2.0</div>
+      </div>
 
-            <div class="status">✅ Розширення активне та готове до роботи</div>
-            <div class="version">Версія 2.0</div>
+      <div id="excluded-tab" class="tab-content">
+        <div class="excluded-header">
+          <h3>🛡️ Saved Chats</h3>
+          <p>These chats will not be deleted during bulk deletion</p>
         </div>
 
-        <div id="excluded-tab" class="tab-content">
-            <div class="excluded-header">
-                <h3>🛡️ Збережені чати</h3>
-                <p>Ці чати не будуть видалені при масовому видаленні</p>
-            </div>
-
-            <div class="add-chat-form">
-                <input type="text" id="new-chat-input" placeholder="Назва чату для збереження..." />
-                <button id="add-chat-btn">➕ Додати</button>
-            </div>
-
-            <div class="excluded-list" id="excluded-list">
-                <!-- Список будет заполнен динамически -->
-            </div>
-
-            <div class="excluded-actions">
-                <button id="reset-excluded-btn" class="danger-btn">🔄 Скинути до стандартних</button>
-            </div>
+        <div class="add-chat-form">
+          <input
+            type="text"
+            id="new-chat-input"
+            placeholder="Chat name to save..."
+          />
+          <button id="add-chat-btn">➕ Add</button>
         </div>
+
+        <div class="excluded-list" id="excluded-list">
+          <!-- List will be populated dynamically -->
         </div>
+
+        <div class="excluded-actions">
+          <button id="reset-excluded-btn" class="danger-btn">
+            🔄 Reset to Default
+          </button>
+        </div>
+      </div>
+    </div>
 
     <script src="popup.js"></script>
-</body>
+  </body>
 </html>

@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
-  // Стандартные исключенные чаты
+  // Default excluded chats
   const DEFAULT_EXCLUDED_CHATS = [
-    'Правила игры в тринку',
-    'Ответственность при повреждении машины',
+    'Game Rules for Trinka',
+    'Liability for Vehicle Damage',
   ];
 
-  // Элементы DOM
+  // DOM elements
   const tabButtons = document.querySelectorAll('.tab-button');
   const tabContents = document.querySelectorAll('.tab-content');
   const newChatInput = document.getElementById('new-chat-input');
@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const excludedList = document.getElementById('excluded-list');
   const resetButton = document.getElementById('reset-excluded-btn');
 
-  // Инициализация
+  // Initialization
   initializeTabs();
   loadExcludedChats();
 
-  /** Инициализация табов */
+  /** Initialize tabs */
   function initializeTabs() {
     tabButtons.forEach((button) => {
       button.addEventListener('click', () => {
@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /** Переключение между табами */
+  /** Switch between tabs */
   function switchToTab(targetTabName) {
-    // Убираем активный класс со всех кнопок и контента
+    // Remove active class from all buttons and content
     tabButtons.forEach((btn) => btn.classList.remove('active'));
     tabContents.forEach((content) => content.classList.remove('active'));
 
-    // Добавляем активный класс к выбранным элементам
+    // Add active class to selected elements
     const activeButton = document.querySelector(
       `[data-tab="${targetTabName}"]`
     );
@@ -46,38 +46,38 @@ document.addEventListener('DOMContentLoaded', function () {
       activeContent.classList.add('active');
     }
 
-    // Если переключились на таб исключений, обновляем список
+    // If switched to excluded tab, update list
     if (targetTabName === 'excluded') {
       loadExcludedChats();
     }
   }
 
-  /** Загрузка исключенных чатов из storage */
+  /** Load excluded chats from storage */
   async function loadExcludedChats() {
     try {
       const result = await chrome.storage.sync.get(['excludedChats']);
       const excludedChats = result.excludedChats || DEFAULT_EXCLUDED_CHATS;
       renderExcludedList(excludedChats);
     } catch (error) {
-      console.error('Ошибка загрузки исключенных чатов:', error);
+      console.error('Error loading excluded chats:', error);
       renderExcludedList(DEFAULT_EXCLUDED_CHATS);
     }
   }
 
-  /** Сохранение исключенных чатов в storage */
+  /** Save excluded chats to storage */
   async function saveExcludedChats(excludedChats) {
     try {
       await chrome.storage.sync.set({ excludedChats });
-      console.log('Исключенные чаты сохранены:', excludedChats);
+      console.log('Excluded chats saved:', excludedChats);
 
-      // Уведомляем content script об изменениях
+      // Notify content script about changes
       notifyContentScriptAboutChanges(excludedChats);
     } catch (error) {
-      console.error('Ошибка сохранения исключенных чатов:', error);
+      console.error('Error saving excluded chats:', error);
     }
   }
 
-  /** Уведомление content script об изменениях */
+  /** Notify content script about changes */
   async function notifyContentScriptAboutChanges(excludedChats) {
     try {
       const [tab] = await chrome.tabs.query({
@@ -94,17 +94,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       }
     } catch (error) {
-      console.log('Content script не найден или не активен');
+      console.log('Content script not found or not active');
     }
   }
 
-  /** Отрисовка списка исключенных чатов */
+  /** Render excluded chats list */
   function renderExcludedList(excludedChats) {
     excludedList.innerHTML = '';
 
     if (!excludedChats || excludedChats.length === 0) {
-      excludedList.innerHTML =
-        '<div class="empty-state">Немає збережених чатів</div>';
+      excludedList.innerHTML = '<div class="empty-state">No saved chats</div>';
       return;
     }
 
@@ -114,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /** Создание элемента исключенного чата */
+  /** Create excluded chat item element */
   function createExcludedItem(chatTitle, index) {
     const itemDiv = document.createElement('div');
     itemDiv.className = 'excluded-item';
@@ -126,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
     `;
 
-    // Обработчики событий
+    // Event handlers
     const editButton = itemDiv.querySelector('.edit-btn');
     const deleteButton = itemDiv.querySelector('.delete-btn');
 
@@ -136,19 +135,19 @@ document.addEventListener('DOMContentLoaded', function () {
     return itemDiv;
   }
 
-  /** Экранирование HTML */
+  /** Escape HTML */
   function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
   }
 
-  /** Добавление нового исключенного чата */
+  /** Add new excluded chat */
   async function addExcludedChat() {
     const newChatTitle = newChatInput.value.trim();
 
     if (!newChatTitle) {
-      alert('Введіть назву чату');
+      alert('Please enter chat name');
       return;
     }
 
@@ -156,13 +155,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const result = await chrome.storage.sync.get(['excludedChats']);
       const currentExcluded = result.excludedChats || DEFAULT_EXCLUDED_CHATS;
 
-      // Проверяем, нет ли уже такого чата
+      // Check if chat already exists
       if (
         currentExcluded.some(
           (chat) => chat.toLowerCase() === newChatTitle.toLowerCase()
         )
       ) {
-        alert('Такий чат вже є в списку збережених');
+        alert('This chat is already in the saved list');
         return;
       }
 
@@ -172,36 +171,36 @@ document.addEventListener('DOMContentLoaded', function () {
       newChatInput.value = '';
       renderExcludedList(updatedExcluded);
     } catch (error) {
-      console.error('Ошибка добавления чата:', error);
-      alert('Помилка при додаванні чату');
+      console.error('Error adding chat:', error);
+      alert('Error adding chat');
     }
   }
 
-  /** Редактирование исключенного чата */
+  /** Edit excluded chat */
   async function editExcludedChat(index) {
     try {
       const result = await chrome.storage.sync.get(['excludedChats']);
       const currentExcluded = result.excludedChats || DEFAULT_EXCLUDED_CHATS;
 
       const currentTitle = currentExcluded[index];
-      const newTitle = prompt('Редагувати назву чату:', currentTitle);
+      const newTitle = prompt('Edit chat name:', currentTitle);
 
-      if (newTitle === null) return; // Отмена
+      if (newTitle === null) return; // Cancel
 
       const trimmedTitle = newTitle.trim();
       if (!trimmedTitle) {
-        alert('Назва чату не може бути порожньою');
+        alert('Chat name cannot be empty');
         return;
       }
 
-      // Проверяем на дубликаты (исключая текущий элемент)
+      // Check for duplicates (excluding current item)
       const otherChats = currentExcluded.filter((_, i) => i !== index);
       if (
         otherChats.some(
           (chat) => chat.toLowerCase() === trimmedTitle.toLowerCase()
         )
       ) {
-        alert('Такий чат вже є в списку збережених');
+        alert('This chat is already in the saved list');
         return;
       }
 
@@ -211,19 +210,19 @@ document.addEventListener('DOMContentLoaded', function () {
       await saveExcludedChats(updatedExcluded);
       renderExcludedList(updatedExcluded);
     } catch (error) {
-      console.error('Ошибка редактирования чата:', error);
-      alert('Помилка при редагуванні чату');
+      console.error('Error editing chat:', error);
+      alert('Error editing chat');
     }
   }
 
-  /** Удаление исключенного чата */
+  /** Delete excluded chat */
   async function deleteExcludedChat(index) {
     try {
       const result = await chrome.storage.sync.get(['excludedChats']);
       const currentExcluded = result.excludedChats || DEFAULT_EXCLUDED_CHATS;
 
       const chatTitle = currentExcluded[index];
-      if (!confirm(`Видалити "${chatTitle}" зі збережених чатів?`)) {
+      if (!confirm(`Remove "${chatTitle}" from saved chats?`)) {
         return;
       }
 
@@ -231,16 +230,16 @@ document.addEventListener('DOMContentLoaded', function () {
       await saveExcludedChats(updatedExcluded);
       renderExcludedList(updatedExcluded);
     } catch (error) {
-      console.error('Ошибка удаления чата:', error);
-      alert('Помилка при видаленні чату');
+      console.error('Error deleting chat:', error);
+      alert('Error deleting chat');
     }
   }
 
-  /** Сброс к стандартным исключенным чатам */
+  /** Reset to default excluded chats */
   async function resetToDefaultExcluded() {
     if (
       !confirm(
-        'Скинути список збережених чатів до стандартного? Всі ваші зміни будуть втрачені.'
+        'Reset saved chats list to default? All your changes will be lost.'
       )
     ) {
       return;
@@ -250,16 +249,16 @@ document.addEventListener('DOMContentLoaded', function () {
       await saveExcludedChats(DEFAULT_EXCLUDED_CHATS);
       renderExcludedList(DEFAULT_EXCLUDED_CHATS);
     } catch (error) {
-      console.error('Ошибка сброса к стандартным чатам:', error);
-      alert('Помилка при скиданні до стандартних чатів');
+      console.error('Error resetting to default chats:', error);
+      alert('Error resetting to default chats');
     }
   }
 
-  // Обработчики событий
+  // Event handlers
   addChatButton.addEventListener('click', addExcludedChat);
   resetButton.addEventListener('click', resetToDefaultExcluded);
 
-  // Добавление чата по Enter
+  // Add chat on Enter key
   newChatInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
       addExcludedChat();

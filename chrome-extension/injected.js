@@ -1,24 +1,21 @@
 (function () {
   'use strict';
 
-  // Сохраняем оригинальную функцию fetch
+  // Save original fetch function
   const originalFetch = window.fetch;
 
-  // Переопределяем fetch для перехвата токена
+  // Override fetch to intercept token
   window.fetch = async function (resource, options) {
-    // Проверяем наличие заголовка Authorization в запросе
+    // Check for Authorization header in request
     if (options && options.headers && options.headers.Authorization) {
       const authorizationHeader = options.headers.Authorization;
       const tokenMatch = authorizationHeader.match(/Bearer\s+(.+)/i);
 
       if (tokenMatch) {
         const extractedToken = tokenMatch[1];
-        console.log(
-          '🗝️ Токен перехвачен инъектированным скриптом:',
-          extractedToken
-        );
+        console.log('🗝️ Token captured by injected script:', extractedToken);
 
-        // Отправляем токен в content script через postMessage
+        // Send token to content script via postMessage
         window.postMessage(
           {
             type: 'GPT_TOKEN_CAPTURED',
@@ -29,9 +26,9 @@
       }
     }
 
-    // Выполняем оригинальный fetch запрос
+    // Execute original fetch request
     return originalFetch.call(this, resource, options);
   };
 
-  console.log('🔧 Fetch перехватчик установлен');
+  console.log('🔧 Fetch interceptor installed');
 })();
