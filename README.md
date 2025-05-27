@@ -1,176 +1,169 @@
-# 🗑️ ChatGPT Bulk Chat Remover
+# ChatGPT Bulk Chat Remover - TypeScript Edition
 
-A powerful Chrome extension for bulk deleting ChatGPT conversations with advanced features like auto-scroll, selective deletion, and saved chat management.
+A Chrome extension for bulk deleting ChatGPT conversations with TypeScript support for better development experience.
 
-## ✨ Features
+## 🚀 Features
 
-- **📜 Auto-scroll**: Automatically loads all chat conversations using lazy loading
-- **✅ Bulk Selection**: Select all chats at once (excluding saved ones)
-- **❌ Quick Unselect**: Instantly unselect all chats with one click
-- **🛡️ Saved Chats Management**: Protect important conversations from deletion
-- **🔒 Automatic Token Capture**: Seamlessly intercepts authentication tokens
-- **🗑️ API-based Deletion**: Fast and reliable deletion through ChatGPT's API
-- **📊 Progress Indicator**: Real-time status updates during operations
-- **💾 Persistent Storage**: Saved chats sync across devices
-- **🎨 Modern UI**: Beautiful, responsive interface with hover effects
+- **Auto-scroll**: Automatically loads all chats via lazy loading
+- **Smart Selection**: Mass selection with exclusions for important chats
+- **Token Interception**: Automatically captures authorization tokens
+- **Bulk Deletion**: API-based deletion with progress indicators
+- **Saved Chats**: Manage protected chats that won't be deleted
+- **TypeScript**: Full TypeScript support with compile-time error checking
 
-## 🚀 Installation
+## 🛠️ Development Setup
 
-### Method 1: Chrome Web Store (Recommended)
+### Prerequisites
 
-_Coming soon - extension will be published to Chrome Web Store_
+- Node.js (v14 or higher)
+- npm or yarn
+- Chrome browser for testing
 
-### Method 2: Manual Installation (Developer Mode)
+### Installation
 
-1. **Download the extension**:
+1. Clone the repository:
 
-   - Clone this repository or download as ZIP
-   - Extract to a folder on your computer
+```bash
+git clone <repository-url>
+cd chatgpt-bulk-chat-remover/chrome-extension
+```
 
-2. **Enable Developer Mode**:
+2. Install dependencies:
 
-   - Open Chrome and go to `chrome://extensions/`
-   - Toggle "Developer mode" in the top right corner
+```bash
+npm install
+```
 
-3. **Load the extension**:
-   - Click "Load unpacked"
-   - Select the `chrome-extension` folder
-   - The extension icon should appear in your toolbar
+3. Build the project:
 
-## 📖 How to Use
+```bash
+npm run build
+```
 
-### Basic Usage
+### Development Scripts
 
-1. **Navigate to ChatGPT**: Go to [chatgpt.com](https://chatgpt.com)
-2. **Extension Auto-loads**: The interface appears automatically in the sidebar
-3. **Load All Chats**: Click "📜 Load All Chats" to scroll and load all conversations
-4. **Select Chats**: Click "✅ Select All" to select all chats (except saved ones)
-5. **Delete**: Click "🗑 Delete Selected" to remove selected conversations
+- `npm run build` - Compile TypeScript to JavaScript
+- `npm run watch` - Watch for changes and auto-compile
+- `npm run dev` - Development mode with watch
+- `npm run type-check` - Type checking without compilation
+- `npm run clean` - Clean compiled files
 
-### Managing Saved Chats
-
-1. **Open Extension Popup**: Click the extension icon in your browser toolbar
-2. **Go to Saved Chats Tab**: Click on "Saved Chats" tab
-3. **Add New Saved Chat**:
-   - Type the chat name in the input field
-   - Click "➕ Add" or press Enter
-4. **Edit Saved Chat**: Click "✏️" next to any chat name
-5. **Remove Saved Chat**: Click "🗑️" next to any chat name
-6. **Reset to Default**: Click "🔄 Reset to Default" to restore original settings
-
-### Interface Controls
-
-- **📜 Load All Chats**: Auto-scrolls to load all conversations
-- **✅ Select All**: Selects all chats except those in your saved list
-- **❌ Unselect All**: Quickly removes all selections
-- **🗑 Delete Selected**: Permanently deletes selected conversations
-
-## 🛡️ Default Saved Chats
-
-The extension comes with these default saved chats:
-
-- "Game Rules for Trinka"
-- "Liability for Vehicle Damage"
-
-You can modify this list through the extension popup interface.
-
-## 🔧 Technical Details
-
-### Architecture
-
-- **Manifest V3**: Uses the latest Chrome extension standards
-- **Content Script**: Handles ChatGPT page interaction
-- **Injected Script**: Captures authentication tokens
-- **Popup Interface**: Manages saved chats and settings
-- **Chrome Storage**: Syncs data across devices
-
-### Permissions
-
-- `activeTab`: Access to current ChatGPT tab
-- `storage`: Save and sync user preferences
-- `host_permissions`: Access to chatgpt.com and chat.openai.com
-
-### Security
-
-- All data stored locally in browser
-- No external server communication
-- Secure token handling
-- No personal data collection
-
-## 🎨 UI Features
-
-### Modern Button Design
-
-- Colorful, intuitive button styling
-- Smooth hover animations
-- Click feedback effects
-- Responsive layout
-
-### Color Scheme
-
-- 🔵 **Load Chats**: Blue (`#2196F3`)
-- 🟢 **Select All**: Green (`#4CAF50`)
-- 🟠 **Unselect All**: Orange (`#FF9800`)
-- 🔴 **Delete**: Red (`#f44336`)
-
-## 📁 Project Structure
+### Project Structure
 
 ```
 chrome-extension/
-├── manifest.json          # Extension configuration
-├── content.js            # Main functionality
-├── injected.js           # Token interception
-├── popup.html            # Extension popup interface
-├── popup.js              # Popup functionality
-├── icons/                # Extension icons
-│   ├── icon16.png
-│   ├── icon48.png
-│   └── icon128.png
-└── docs/                 # Documentation
-    └── EXCLUDED_CHATS.md # Saved chats guide
+├── src/                          # TypeScript source files
+│   ├── shared-constants.ts       # Global constants and types
+│   ├── content.ts                # Content script main file
+│   ├── popup.ts                  # Popup script main file
+│   └── modules/                  # Modular components
+│       ├── storage-service.ts    # Chrome storage management
+│       ├── ui-components.ts      # UI component factories
+│       └── chat-operations.ts    # Chat loading and deletion
+├── dist/                         # Compiled JavaScript (auto-generated)
+├── icons/                        # Extension icons
+├── manifest.json                 # Chrome extension manifest
+├── popup.html                    # Popup interface
+├── injected.js                   # Token interception script
+├── tsconfig.json                 # TypeScript configuration
+├── package.json                  # Dependencies and scripts
+└── README.md                     # This file
 ```
 
-## 🔄 Version History
+### TypeScript Configuration
 
-### Version 2.0 (Current)
+The project uses strict TypeScript configuration with:
 
-- ✅ Complete English translation
-- ✅ Modern button design with hover effects
-- ✅ Unselect all functionality
-- ✅ Enhanced saved chats management
-- ✅ Improved error handling
-- ✅ Better user experience
+- Compile target: ES2020
+- Module system: None (for Chrome extension compatibility)
+- Strict type checking enabled
+- Source maps for debugging
+- Declaration files generation
 
-### Version 1.0
+### Development Workflow
 
-- ✅ Basic bulk deletion functionality
-- ✅ Auto-scroll and token capture
-- ✅ Saved chats feature
-- ✅ Chrome extension architecture
+1. **Make changes** to TypeScript files in `src/`
+2. **Compile** using `npm run build` or `npm run watch`
+3. **Load extension** in Chrome from the project directory
+4. **Test** functionality on chatgpt.com
+5. **Debug** using Chrome DevTools with source maps
 
-## 🤝 Contributing
+### Chrome Extension Loading
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Open Chrome and go to `chrome://extensions/`
+2. Enable "Developer mode"
+3. Click "Load unpacked"
+4. Select the `chrome-extension` directory
+5. The extension will appear in your extensions list
 
-### Development Setup
+### Architecture
 
-1. Clone the repository
-2. Make your changes in the `chrome-extension/` directory
-3. Test the extension in Chrome developer mode
-4. Submit a pull request
+The extension uses a modular architecture with:
+
+- **IIFE Pattern**: Each module wraps itself in an IIFE for isolation
+- **Global Window Objects**: Modules attach themselves to `window` for cross-module communication
+- **Inline Types**: Type definitions are included inline to avoid import issues
+- **Chrome Extension APIs**: Full TypeScript support for Chrome extension APIs
+
+### Type Safety
+
+All code is fully typed with:
+
+- Interface definitions for all data structures
+- Type annotations for function parameters and return values
+- Strict null checks and undefined handling
+- Chrome API type definitions
+
+### Building for Production
+
+```bash
+# Clean previous build
+npm run clean
+
+# Build optimized version
+npm run build
+
+# The dist/ folder contains the compiled JavaScript
+```
+
+### Debugging
+
+- Source maps are generated for debugging TypeScript in Chrome DevTools
+- Use `console.log` statements in TypeScript - they'll appear in the browser console
+- Chrome extension debugging tools are available in DevTools
+
+### Common Issues
+
+1. **Import/Export Errors**: The extension uses global window objects instead of ES6 modules
+2. **Type Errors**: Run `npm run type-check` to see all type issues
+3. **Compilation Errors**: Check `tsconfig.json` for configuration issues
+
+### Contributing
+
+1. Make changes to TypeScript files in `src/`
+2. Ensure `npm run type-check` passes
+3. Test the compiled extension in Chrome
+4. Submit pull request with both TypeScript and compiled JavaScript
+
+## 📝 Usage
+
+1. Install and load the extension in Chrome
+2. Navigate to chatgpt.com
+3. The extension interface will appear in the chat sidebar
+4. Use the buttons to:
+   - Load all chats (auto-scroll)
+   - Select/unselect chats
+   - Delete selected chats
+5. Manage saved chats in the extension popup
+
+## 🔧 Technical Details
+
+- **Content Script**: Injects UI and handles chat operations
+- **Popup Script**: Manages saved chats configuration
+- **Token Interception**: Captures API tokens from network requests
+- **Storage**: Uses Chrome sync storage for saved chats
+- **API Integration**: Direct calls to ChatGPT backend API
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
-
-## ⚠️ Disclaimer
-
-This extension is not affiliated with OpenAI or ChatGPT. Use at your own risk. Always backup important conversations before bulk deletion.
-
-## 🐛 Bug Reports & Feature Requests
-
-Please use the [GitHub Issues](https://github.com/your-username/chatgpt-bulk-chat-remover/issues) page to report bugs or request new features.
-
----
-
-**Made with ❤️ for the ChatGPT community**
+This project is licensed under the MIT License.

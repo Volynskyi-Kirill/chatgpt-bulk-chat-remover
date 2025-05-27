@@ -8,7 +8,13 @@
   "content_scripts": [
     {
       "matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"],
-      "js": ["content.js"],
+      "js": [
+        "dist/src/shared-constants.js",
+        "dist/src/modules/storage-service.js",
+        "dist/src/modules/ui-components.js",
+        "dist/src/modules/chat-operations.js",
+        "dist/src/content.js"
+      ],
       "run_at": "document_end"
     }
   ],
@@ -17,9 +23,9 @@
     "default_title": "ChatGPT Bulk Chat Remover"
   },
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+    "16": "icons/original.png",
+    "48": "icons/original.png",
+    "128": "icons/original.png"
   },
   "web_accessible_resources": [
     {
