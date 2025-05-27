@@ -23,6 +23,7 @@ interface AppTiming {
   SCROLL_DELAY: number;
   MAX_SCROLL_ITERATIONS: number;
   MAX_UNCHANGED_HEIGHT: number;
+  DELETION_CONCURRENCY_LIMIT: number;
 }
 
 interface AppMessages {
@@ -111,8 +112,9 @@ const SHARED_CONSTANTS: AppConstants = {
     TIMING: {
       CHECK_INTERVAL: 1000,
       SCROLL_DELAY: 500,
-      MAX_SCROLL_ITERATIONS: 50,
+      MAX_SCROLL_ITERATIONS: 70,
       MAX_UNCHANGED_HEIGHT: 3,
+      DELETION_CONCURRENCY_LIMIT: 4,
     },
     MESSAGES: {
       NO_CHATS_SELECTED: 'No chats selected for deletion.',
