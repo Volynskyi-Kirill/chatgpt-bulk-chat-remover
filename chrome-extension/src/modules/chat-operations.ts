@@ -125,13 +125,34 @@ class ChatDeleter {
 
     ChatStatusManager.createOrUpdateIndicator('⏳ Deleting...');
     let deletedCount = 0;
+    const concurrencyLimit = CHAT_CONSTANTS.TIMING.DELETION_CONCURRENCY_LIMIT;
+    const checkboxesArray = Array.from(selectedCheckboxes);
 
-    for (const checkbox of Array.from(selectedCheckboxes)) {
-      const chatId = this.extractChatId(checkbox);
-      if (!chatId) continue;
+    // Process chats in batches with limited concurrency
+    for (
+      let batchIndex = 0;
+      batchIndex < checkboxesArray.length;
+      batchIndex += concurrencyLimit
+    ) {
+      const currentBatch = checkboxesArray.slice(
+        batchIndex,
+        batchIndex + concurrencyLimit
+      );
 
-      const success = await this.deleteSingleChat(chatId);
-      if (success) deletedCount++;
+      const batchResults = await Promise.all(
+        currentBatch.map(async (checkbox) => {
+          const chatId = this.extractChatId(checkbox);
+          if (!chatId) return false;
+          return await this.deleteSingleChat(chatId);
+        })
+      );
+
+      deletedCount += batchResults.filter(Boolean).length;
+
+      // Update progress indicator
+      ChatStatusManager.createOrUpdateIndicator(
+        `⏳ Deleted ${deletedCount} of ${checkboxesArray.length} chat(s)...`
+      );
     }
 
     ChatStatusManager.createOrUpdateIndicator(

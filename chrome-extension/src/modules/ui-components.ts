@@ -24,6 +24,7 @@ interface ContentConstants {
     SCROLL_DELAY: number;
     MAX_SCROLL_ITERATIONS: number;
     MAX_UNCHANGED_HEIGHT: number;
+    DELETION_CONCURRENCY_LIMIT: number;
   };
   MESSAGES: {
     NO_CHATS_SELECTED: string;
