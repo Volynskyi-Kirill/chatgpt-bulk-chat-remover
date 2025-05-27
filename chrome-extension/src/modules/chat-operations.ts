@@ -74,7 +74,7 @@ class ChatSelector {
 
     checkboxes.forEach((checkbox) => {
       const chatLink = checkbox.closest(
-        'a[draggable="true"]'
+        'a[draggable]'
       ) as HTMLAnchorElement | null;
       const titleElement = chatLink?.querySelector(
         '.truncate'
@@ -163,7 +163,7 @@ class ChatDeleter {
 
   private extractChatId(checkbox: HTMLInputElement): string | null {
     const chatLink = checkbox.closest(
-      'a[draggable="true"]'
+      'a[draggable]'
     ) as HTMLAnchorElement | null;
     if (!chatLink) {
       console.warn('Link not found for checkbox', checkbox);

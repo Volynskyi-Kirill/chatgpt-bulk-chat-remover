@@ -99,7 +99,7 @@ const SHARED_CONSTANTS: AppConstants = {
   CONTENT: {
     SELECTORS: {
       NAVIGATION_SIDEBAR: 'nav[aria-label="Chat history"]',
-      CHAT_LINKS: 'nav[aria-label="Chat history"] a[draggable="true"]',
+      CHAT_LINKS: 'nav[aria-label="Chat history"] a[draggable]',
       CHAT_CHECKBOXES: '.gpt-chat-checkbox',
       STATUS_INDICATOR: '#gpt-bulk-status-indicator',
     },
