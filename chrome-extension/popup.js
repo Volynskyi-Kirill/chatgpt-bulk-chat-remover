@@ -2,10 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
   // Default excluded chats
-  const DEFAULT_EXCLUDED_CHATS = [
-    'Game Rules for Trinka',
-    'Liability for Vehicle Damage',
-  ];
+  const DEFAULT_EXCLUDED_CHATS = [];
 
   // DOM elements
   const tabButtons = document.querySelectorAll('.tab-button');

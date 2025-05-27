@@ -13,7 +13,7 @@
 
       if (tokenMatch) {
         const extractedToken = tokenMatch[1];
-        console.log('🗝️ Token captured by injected script:', extractedToken);
+        console.log('🗝️ Token captured by injected script:');
 
         // Send token to content script via postMessage
         window.postMessage(
